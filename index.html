@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+    
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪙 Zee Toss Pro</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .coin-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(255, 170, 0, 0.3);
+            animation: coinRotate 4s ease-in-out infinite;
+        }
+
+        @keyframes coinRotate {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+        }
+
+        .content {
+            padding: 35px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toss-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .toss-type-btn {
+            padding: 20px 10px;
+            background: #f3f4f6;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toss-type-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            background: #e5e7eb;
+        }
+
+        .toss-type-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .toss-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .toss-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: block;
+        }
+
+        .toss-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .player-btn {
+            padding: 18px 10px;
+            background: #f3f4f6;
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            color: #374151;
+        }
+
+        .player-btn.active {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .name-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .name-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: fadeInLeft 0.4s ease;
+            animation-fill-mode: both;
+        }
+
+        .name-item:nth-child(1) { animation-delay: 0.05s; }
+        .name-item:nth-child(2) { animation-delay: 0.1s; }
+        .name-item:nth-child(3) { animation-delay: 0.15s; }
+        .name-item:nth-child(4) { animation-delay: 0.2s; }
+        .name-item:nth-child(5) { animation-delay: 0.25s; }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .player-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .player-badge:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .badge-1 { background: linear-gradient(135deg, #ffd700 0%, #ffb800 100%); }
+        .badge-2 { background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%); }
+        .badge-3 { background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%); }
+        .badge-4 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .badge-5 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .badge-6 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .badge-7 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .badge-8 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .badge-9 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+        .badge-10 { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); color: #333; }
+
+        .name-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .toss-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(255, 170, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toss-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 170, 0, 0.4);
+        }
+
+        .toss-btn:disabled {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .results-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00);
+            border-radius: 2px;
+        }
+
+        .result-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .result-card:hover {
+            transform: translateX(8px);
+            background: #f3f4f6;
+        }
+
+        .result-card.winner {
+            background: linear-gradient(135deg, #fef9c3 0%, #fde68a 100%);
+            border-color: #fbbf24;
+            animation: winnerPulse 2s ease-in-out infinite;
+        }
+
+        .result-card.team-a {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #3b82f6;
+        }
+
+        .result-card.team-b {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border-color: #ec4899;
+        }
+
+        @keyframes winnerPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+        }
+
+        .rank-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0) rotate(-180deg); }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .rank-1 { 
+            background: linear-gradient(135deg, #ffd700 0%, #ffb800 100%); 
+            color: #1a1a2e;
+            box-shadow: 0 8px 25px rgba(255, 184, 0, 0.4);
+        }
+        .rank-2 { 
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%); 
+            color: #374151;
+        }
+        .rank-3 { 
+            background: linear-gradient(135deg, #fdba74 0%, #fb923c 100%); 
+            color: white;
+        }
+        .rank-other { 
+            background: #e5e7eb; 
+            color: #9ca3af;
+        }
+
+        .team-badge-a {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .team-badge-b {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            color: white;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .result-status {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-winner { color: #d97706; }
+        .status-loser { color: #9ca3af; }
+        .status-team-a { color: #1d4ed8; font-weight: 700; }
+        .status-team-b { color: #db2777; font-weight: 700; }
+
+        .result-trophy {
+            font-size: 2rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .team-header-a {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1d4ed8;
+        }
+
+        .team-header-b {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            color: #db2777;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #f3f4f6;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #667eea;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 6px;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 25px;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #e5e7eb;
+            border-color: #d1d5db;
+            color: #374151;
+            transform: translateY(-2px);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1a1a2e;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 520px) {
+            .container {
+                border-radius: 0;
+                max-width: 100%;
+            }
+            .content {
+                padding: 25px;
+            }
+            .player-grid {
+                gap: 8px;
+            }
+            .player-btn {
+                padding: 14px 5px;
+                font-size: 1.1rem;
+            }
+            .toss-types {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .toss-type-btn {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 15px;
+                padding: 15px;
+            }
+            .toss-icon {
+                margin-bottom: 0;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="coin-icon">🪙</div>
+            <h1>Zee Toss</h1>
+            <p>Choose your toss type</p>
+        </div>
+
+        <div class="content">
+            <!-- Toss Type Selection -->
+            <div class="section">
+                <div class="section-title">🎲 Select Toss Type</div>
+                <div class="toss-types" id="tossTypes">
+                    <button class="toss-type-btn active" data-type="classic" onclick="selectTossType('classic')">
+                        <span class="toss-icon">🏆</span>
+                        <span class="toss-label">Classic</span>
+                        <span class="toss-desc">Winners vs Losers</span>
+                    </button>
+                    <button class="toss-type-btn" data-type="teams" onclick="selectTossType('teams')">
+                        <span class="toss-icon">⚔️</span>
+                        <span class="toss-label">Team Split</span>
+                        <span class="toss-desc">2 Teams</span>
+                    </button>
+                    <button class="toss-type-btn" data-type="order" onclick="selectTossType('order')">
+                        <span class="toss-icon">📋</span>
+                        <span class="toss-label">Order</span>
+                        <span class="toss-desc">Random Ranking</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Players -->
+            <div class="section">
+                <div class="section-title">👥 Select Players</div>
+                <div class="player-grid" id="playerGrid">
+                    <button class="player-btn active" data-count="2">2</button>
+                    <button class="player-btn" data-count="3">3</button>
+                    <button class="player-btn" data-count="4">4</button>
+                    <button class="player-btn" data-count="5">5</button>
+                    <button class="player-btn" data-count="6">6</button>
+                    <button class="player-btn" data-count="7">7</button>
+                    <button class="player-btn" data-count="8">8</button>
+                    <button class="player-btn" data-count="9">9</button>
+                    <button class="player-btn" data-count="10">10</button>
+                </div>
+            </div>
+
+            <!-- Names -->
+            <div class="section" id="namesSection">
+                <div class="section-title">✏️ Enter Names</div>
+                <div class="name-list" id="nameList"></div>
+            </div>
+
+            <!-- Toss -->
+            <div class="section">
+                <button class="toss-btn" id="tossBtn" onclick="startToss()">
+                    🪙 Start Toss
+                </button>
+            </div>
+
+            <!-- Results -->
+            <div class="results" id="results">
+                <div class="results-title" id="resultsTitle">🏆 Champions</div>
+                <div id="resultsList"></div>
+                
+                <div class="stats-bar">
+                    <div class="stat-box">
+                        <div class="stat-value" id="statPlayers">0</div>
+                        <div class="stat-label">Players</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="statWinners">0</div>
+                        <div class="stat-label" id="statLabelWinners">Winners</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="statTime">0s</div>
+                        <div class="stat-label">Duration</div>
+                    </div>
+                </div>
+
+                <button class="reset-btn" onclick="resetAll()">🔄 New Toss</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Message</div>
+
+    <script>
+        let playerCount = 2;
+        let tossType = 'classic';
+        let isTossing = false;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateInputs();
+            setupButtons();
+        });
+
+        function selectTossType(type) {
+            tossType = type;
+            document.querySelectorAll('.toss-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-type="${type}"]`).classList.add('active');
+            
+            const titles = {
+                'classic': '🏆 Champions',
+                'teams': '⚔️ Team Battle',
+                'order': '📋 Random Order'
+            };
+            document.getElementById('resultsTitle').textContent = titles[type];
+        }
+
+        function setupButtons() {
+            document.querySelectorAll('.player-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    playerCount = parseInt(btn.dataset.count);
+                    generateInputs();
+                });
+            });
+        }
+
+        function generateInputs() {
+            const container = document.getElementById('nameList');
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= playerCount; i++) {
+                const item = document.createElement('div');
+                item.className = 'name-item';
+                item.innerHTML = `
+                    <div class="player-badge badge-${i}">P${i}</div>
+                    <input type="text" class="name-input" id="player${i}" placeholder="Player ${i}">
+                `;
+                container.appendChild(item);
+            }
+        }
+
+        function getNames() {
+            const names = [];
+            for (let i = 1; i <= playerCount; i++) {
+                const val = document.getElementById(`player${i}`).value.trim();
+                names.push(val || `Player ${i}`);
+            }
+            return names;
+        }
+
+        async function startToss() {
+            if (isTossing) return;
+            
+            const names = getNames();
+            isTossing = true;
+            
+            const btn = document.getElementById('tossBtn');
+            btn.disabled = true;
+            btn.innerHTML = '🪙 Tossing...';
+            
+            const start = Date.now();
+            await new Promise(r => setTimeout(r, 2000));
+            
+            const shuffled = [...names].sort(() => Math.random() - 0.5);
+            const time = ((Date.now() - start) / 1000).toFixed(1);
+            
+            if (tossType === 'classic') {
+                const winners = shuffled.slice(0, Math.ceil(playerCount / 2));
+                showClassicResults(shuffled, winners, time);
+            } else if (tossType === 'teams') {
+                const mid = Math.ceil(shuffled.length / 2);
+                const teamA = shuffled.slice(0, mid);
+                const teamB = shuffled.slice(mid);
+                showTeamResults(teamA, teamB, time);
+            } else if (tossType === 'order') {
+                showOrderResults(shuffled, time);
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = '🪙 Start Toss';
+            isTossing = false;
+        }
+
+        function showClassicResults(players, winners, time) {
+            const container = document.getElementById('resultsList');
+            container.innerHTML = '';
+            
+            players.forEach((name, i) => {
+                const isWinner = winners.includes(name);
+                const rank = i + 1;
+                
+                const card = document.createElement('div');
+                card.className = `result-card ${isWinner ? 'winner' : ''}`;
+                card.style.animationDelay = (i * 0.1) + 's';
+                
+                const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
+                const status = isWinner ? (rank === 1 ? '🏆 Champion' : '✅ Winner') : '❌ Not selected';
+                const statusClass = isWinner ? 'status-winner' : 'status-loser';
+                
+                card.innerHTML = `
+                    <div class="rank-badge ${rankClass}">${rank}</div>
+                    <div class="result-info">
+                        <div class="result-name">${name}</div>
+                        <div class="result-status ${statusClass}">${status}</div>
+                    </div>
+                    <div class="result-trophy">${isWinner ? '🏆' : ''}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            document.getElementById('statPlayers').textContent = playerCount;
+            document.getElementById('statWinners').textContent = winners.length;
+            document.getElementById('statLabelWinners').textContent = 'Winners';
+            document.getElementById('statTime').textContent = time + 's';
+            
+            document.getElementById('results').classList.add('show');
+            document.getElementById('namesSection').style.display = 'none';
+            document.getElementById('tossBtn').parentElement.style.display = 'none';
+            
+            showToast(`🎉 ${winners[0]} is the Champion!`);
+        }
+
+        function showTeamResults(teamA, teamB, time) {
+            const container = document.getElementById('resultsList');
+            container.innerHTML = '';
+            
+            const headerA = document.createElement('div');
+            headerA.className = 'team-header team-header-a';
+            headerA.innerHTML = '🔵 Team A';
+            container.appendChild(headerA);
+            
+            teamA.forEach((name, i) => {
+                const card = document.createElement('div');
+                card.className = 'result-card team-a';
+                card.style.animationDelay = (i * 0.1) + 's';
+                
+                card.innerHTML = `
+                    <div class="rank-badge team-badge-a">A</div>
+                    <div class="result-info">
+                        <div class="result-name">${name}</div>
+                        <div class="result-status status-team-a">🔵 Team A Member</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            const headerB = document.createElement('div');
+            headerB.className = 'team-header team-header-b';
+            headerB.innerHTML = '🔴 Team B';
+            headerB.style.marginTop = '20px';
+            container.appendChild(headerB);
+            
+            teamB.forEach((name, i) => {
+                const card = document.createElement('div');
+                card.className = 'result-card team-b';
+                card.style.animationDelay = ((teamA.length + i) * 0.1) + 's';
+                
+                card.innerHTML = `
+                    <div class="rank-badge team-badge-b">B</div>
+                    <div class="result-info">
+                        <div class="result-name">${name}</div>
+                        <div class="result-status status-team-b">🔴 Team B Member</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            document.getElementById('statPlayers').textContent = playerCount;
+            document.getElementById('statWinners').textContent = `${teamA.length} vs ${teamB.length}`;
+            document.getElementById('statLabelWinners').textContent = 'Teams';
+            document.getElementById('statTime').textContent = time + 's';
+            
+            document.getElementById('results').classList.add('show');
+            document.getElementById('namesSection').style.display = 'none';
+            document.getElementById('tossBtn').parentElement.style.display = 'none';
+            
+            showToast(`⚔️ Teams formed! Team A: ${teamA.length} vs Team B: ${teamB.length}`);
+        }
+
+        function showOrderResults(players, time) {
+            const container = document.getElementById('resultsList');
+            container.innerHTML = '';
+            
+            players.forEach((name, i) => {
+                const rank = i + 1;
+                
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.style.animationDelay = (i * 0.1) + 's';
+                
+                const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
+                let position = '';
+                if (rank === 1) position = '🥇 First';
+                else if (rank === 2) position = '🥈 Second';
+                else if (rank === 3) position = '🥉 Third';
+                else position = `${rank}th Place`;
+                
+                card.innerHTML = `
+                    <div class="rank-badge ${rankClass}">${rank}</div>
+                    <div class="result-info">
+                        <div class="result-name">${name}</div>
+                        <div class="result-status status-winner">${position}</div>
+                    </div>
+                    <div class="result-trophy">${rank <= 3 ? '🏆' : ''}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            document.getElementById('statPlayers').textContent = playerCount;
+            document.getElementById('statWinners').textContent = playerCount;
+            document.getElementById('statLabelWinners').textContent = 'Ranked';
+            document.getElementById('statTime').textContent = time + 's';
+            
+            document.getElementById('results').classList.add('show');
+            document.getElementById('namesSection').style.display = 'none';
+            document.getElementById('tossBtn').parentElement.style.display = 'none';
+            
+            showToast(`📋 Order generated! ${players[0]} is first!`);
+        }
+
+        function resetAll() {
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('namesSection').style.display = 'block';
+            document.getElementById('tossBtn').parentElement.style.display = 'block';
+            
+            for (let i = 1; i <= playerCount; i++) {
+                document.getElementById(`player${i}`).value = '';
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isTossing) startToss();
+        });
+    </script>
+</body>
+</html>
